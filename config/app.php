@@ -1,5 +1,6 @@
 <?php
 
+use App\Providers\RepositoryServiceProvider;
 use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\ServiceProvider;
 
@@ -160,6 +161,11 @@ return [
          * Package Service Providers...
          */
 
+
+        /*
+         * Custom Service Providers...
+         */
+        RepositoryServiceProvider::class,
         /*
          * Application Service Providers...
          */
