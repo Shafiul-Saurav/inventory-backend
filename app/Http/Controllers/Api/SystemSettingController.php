@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateSystemSettingRequest;
 use App\Repositories\SystemSetting\SystemSettingInterface;
+use App\Trait\ApiResponse;
 use Illuminate\Http\Request;
 
 class SystemSettingController extends Controller
 {
+    use ApiResponse;
+
     private $systemSettingInterface;
 
     public function __construct(SystemSettingInterface $systemSettingInterface)
@@ -20,39 +24,23 @@ class SystemSettingController extends Controller
     public function index()
     {
         $data = $this->systemSettingInterface->all();
-        return $data;
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        if (!$data) {
+            return $this->ResponseError([], null, 'No Data Found!', 200, 'error');
+        }
+        return $this->ResponseSuccess($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateSystemSettingRequest $request, string $id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        try {
+            $data = $this->systemSettingInterface->update($request, $id);
+            return $this->ResponseSuccess($data, null, 'Update Successfully!');
+        } catch (\Exception $e) {
+            return $this->ResponseError($e->getMessage());
+        }
     }
 
 }

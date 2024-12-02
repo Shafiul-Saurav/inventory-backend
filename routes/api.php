@@ -24,5 +24,5 @@ Route::middleware('auth:sanctum')->group(function(){
     });
 
     //System Setting Route
-    Route::apiResource('/system-setting', SystemSettingController::class);
+    Route::apiResource('/system-setting', SystemSettingController::class)->only(['index', 'update']);
 });
