@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\ServiceProvider;
+use App\Repositories\Category\CategoryInterface;
+use App\Repositories\Category\CategoryRepository;
 use App\Repositories\SystemSetting\SystemSettingInterface;
 use App\Repositories\SystemSetting\SystemSettingRepository;
-use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -16,6 +18,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             SystemSettingInterface::class,
             SystemSettingRepository::class
+        );
+
+        $this->app->bind(
+            CategoryInterface::class,
+            CategoryRepository::class
         );
     }
 
