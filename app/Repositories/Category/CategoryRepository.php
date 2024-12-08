@@ -3,16 +3,24 @@
 namespace App\Repositories\Category;
 
 use App\Models\Category;
+use App\Service\FileUploadService;
 use Illuminate\Support\Str;
 
 class CategoryRepository implements CategoryInterface
 {
+    private $file_path = 'public/category';
     /*
     * @return mixed|void
     */
     public function all()
     {
-        $datas = Category::latest('id')->get();
+        $datas = Category::latest('id')->get()
+        ->when(request('name'), function($query) {
+            $query->where(['name' => request('name')]);
+        })
+        ->when(request('code'), function($query) {
+            $query->where(['code' => request('name')]);
+        });
         return $datas;
     }
 
@@ -21,7 +29,18 @@ class CategoryRepository implements CategoryInterface
     */
     public function allPaginate($perPage)
     {
-        $datas = Category::latest('id')->paginate($perPage);
+        $datas = Category::latest('id')
+        ->when(request('search'), function($query){
+            $query->where('name', 'like', '%'.request('search').'%')
+            ->orWhere('code', 'like', '%'.request('search').'%');
+        })
+        ->when(request('name'), function($query){
+            $query->where(['name' => request('name')]);
+        })
+        ->when(request('code'), function($query){
+            $query->where(['code' => request('code')]);
+        })
+        ->paginate($perPage);
         return $datas;
     }
 
@@ -35,6 +54,14 @@ class CategoryRepository implements CategoryInterface
             'name' => $request_data->name,
             'slug' => Str::slug($request_data->name),
             'code' => $request_data->code,
+        ]);
+
+        /* Image Upload */
+        $image_path = (new FileUploadService())->imageUpload($request_data, $data, $this->file_path);
+
+        /* Update File Stage */
+        $data->update([
+            'file' => 'http://localhost:8000'.$image_path,
         ]);
 
         return $this->show($data->id);
@@ -60,6 +87,14 @@ class CategoryRepository implements CategoryInterface
             'name' => $request_data->name,
             'slug' => Str::slug($request_data->name),
             'code' => $request_data->code,
+        ]);
+
+        /* Image Upload */
+        $image_path = (new FileUploadService())->imageUpload($request_data, $data, $this->file_path);
+
+        /* Update File Stage */
+        $data->update([
+            'file' => 'http://localhost:8000'.$image_path,
         ]);
 
         return $data;

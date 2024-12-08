@@ -104,7 +104,7 @@ class CategoryController extends Controller
     {
         try {
             $data = $this->categoryRepository->status($id);
-            return $this->ResponseSuccess($data, null, 'Data Updated Successfully!', 204);
+            return $this->ResponseSuccess($data, null, 'Status Updated Successfully!', 204);
         } catch (\Exception $e) {
             return $this->ResponseError($e->getMessage());
         }
