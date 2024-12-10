@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\BrandController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\SystemSettingController;
 
 /*
@@ -31,4 +32,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allCategories', [CategoryController::class, 'allCategories']);
     Route::get('/categoryStatus/{id}', [CategoryController::class, 'status']);
     Route::apiResource('/categories', CategoryController::class);
+
+    // Brand Route
+    Route::get('/allBrands', [BrandController::class, 'allBrands']);
+    Route::get('/brandStatus/{id}', [BrandController::class, 'status']);
+    Route::apiResource('/brands', BrandController::class);
 });

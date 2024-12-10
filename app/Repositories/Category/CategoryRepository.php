@@ -100,6 +100,10 @@ class CategoryRepository implements CategoryInterface
         return $data;
     }
 
+    /*
+    * @param $data
+    * @return mixed|void
+    */
     public function delete($id)
     {
         $data = $this->show($id);
@@ -108,6 +112,10 @@ class CategoryRepository implements CategoryInterface
         return true;
     }
 
+    /*
+    * @param $data
+    * @return mixed|void
+    */
     public function status($id)
     {
         $data = $this->show($id);
