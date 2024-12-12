@@ -7,6 +7,8 @@ use App\Repositories\Brand\BrandRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Supplier\SupplierInterface;
+use App\Repositories\Supplier\SupplierRepository;
 use App\Repositories\SystemSetting\SystemSettingInterface;
 use App\Repositories\SystemSetting\SystemSettingRepository;
 
@@ -30,6 +32,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             BrandInterface::class,
             BrandRepository::class
+        );
+
+        $this->app->bind(
+            SupplierInterface::class,
+            SupplierRepository::class
         );
     }
 

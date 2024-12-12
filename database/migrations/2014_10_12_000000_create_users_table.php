@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('company_name')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('file')->nullable();
             $table->rememberToken();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

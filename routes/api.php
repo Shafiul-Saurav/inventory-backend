@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\SystemSettingController;
 
 /*
@@ -37,4 +38,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allBrands', [BrandController::class, 'allBrands']);
     Route::get('/brandStatus/{id}', [BrandController::class, 'status']);
     Route::apiResource('/brands', BrandController::class);
+
+    // Supplier Route
+    Route::get('/allSuppliers', [SupplierController::class, 'allSuppliers']);
+    Route::get('/supplierStatus/{id}', [SupplierController::class, 'status']);
+    Route::apiResource('/suppliers', SupplierController::class);
 });
