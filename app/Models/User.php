@@ -33,6 +33,7 @@ class User extends Authenticatable
         'address',
         'company_name',
         'password',
+        'file',
     ];
 
     /**

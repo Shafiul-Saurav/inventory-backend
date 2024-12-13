@@ -71,7 +71,7 @@ class SupplierRepository implements SupplierInterface
 
         /* Update File Stage */
         $data->update([
-            'file' => 'http://localhost:8000'.$imagePath
+            'file' => 'http://localhost:8000'.$imagePath,
         ]);
 
         return $this->show($data->id);
@@ -100,9 +100,8 @@ class SupplierRepository implements SupplierInterface
 
         /* Update File Stage */
         $data->update([
-            'file' => 'http://localhost:8000'.$imagePath
+            'file' => 'http://localhost:8000'.$imagePath,
         ]);
-
         return $data;
     }
 
