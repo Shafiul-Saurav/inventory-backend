@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Repositories\Supplier;
+namespace App\Repositories\Customer;
 
-use App\Models\User as Supplier;
+use App\Models\User as Customer;
 use App\Service\FileUploadService;
 use Illuminate\Support\Facades\Hash;
 
-class SupplierRepository implements SupplierInterface
+class CustomerRepository implements CustomerInterface
 {
-    private $filePath = 'public/supplier';
+    private $filePath = 'public/customer';
     /*
     * @return mixed|void
     */
     public function all()
     {
-        $data = Supplier::supplier()->latest('id')->get();
+        $data = Customer::customer()->latest('id')->get();
 
         return $data;
     }
@@ -24,15 +24,11 @@ class SupplierRepository implements SupplierInterface
     */
     public function allPaginate($perPage)
     {
-        $data = Supplier::supplier()
-        ->latest('id')
+        $data = Customer::customer()->latest('id')
         ->when(request('search'), function($query) {
             $query->where('name', 'like', '%'.request('search').'%')
             ->orWhere('phone', 'like', '%'.request('search').'%')
-            ->orWhere('email', 'like', '%'.request('search').'%')
-            ->orWhere('nid', 'like', '%'.request('search').'%')
-            ->orWhere('address', 'like', '%'.request('search').'%')
-            ->orWhere('company_name', 'like', '%'.request('search').'%');
+            ->orWhere('email', 'like', '%'.request('search').'%');
         })
         ->paginate($perPage);
 
@@ -44,7 +40,8 @@ class SupplierRepository implements SupplierInterface
     */
     public function show($id)
     {
-        $data = Supplier::findOrFail($id);
+        $data = Customer::findOrfail($id);
+
         return $data;
     }
 
@@ -54,16 +51,12 @@ class SupplierRepository implements SupplierInterface
     */
     public function store($requestData)
     {
-        $data = Supplier::create([
-            'role_id' => Supplier::SUPPLIER,
+        $data = Customer::create([
+            'role_id' => Customer::CUSTOMER,
             'name' => $requestData->name,
             'phone' => $requestData->phone,
             'email' => $requestData->email,
-            'nid' => $requestData->nid,
-            'address' => $requestData->address,
-            'company_name' => $requestData->company_name,
             'password' => Hash::make(1234),
-
         ]);
 
         /* Image Upload */
@@ -85,13 +78,10 @@ class SupplierRepository implements SupplierInterface
     {
         $data = $this->show($id);
         $data->update([
-            'role_id' => Supplier::SUPPLIER,
+            'role_id' => Customer::CUSTOMER,
             'name' => $requestData->name,
             'phone' => $requestData->phone,
             'email' => $requestData->email,
-            'nid' => $requestData->nid,
-            'address' => $requestData->address,
-            'company_name' => $requestData->company_name,
         ]);
 
         /* Image Upload */
@@ -101,6 +91,7 @@ class SupplierRepository implements SupplierInterface
         $data->update([
             'file' => 'http://localhost:8000'.$imagePath,
         ]);
+
         return $data;
     }
 
@@ -133,4 +124,6 @@ class SupplierRepository implements SupplierInterface
 
         return $data;
     }
+
+
 }

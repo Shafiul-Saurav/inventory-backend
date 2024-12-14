@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\SystemSettingController;
 
@@ -43,4 +44,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allSuppliers', [SupplierController::class, 'allSuppliers']);
     Route::get('/supplierStatus/{id}', [SupplierController::class, 'status']);
     Route::apiResource('/suppliers', SupplierController::class);
+
+    // Customer Route
+    Route::get('/allCustomers', [CustomerController::class, 'allCustomers']);
+    Route::get('/customerStatus/{id}', [CustomerController::class, 'status']);
+    Route::apiResource('/customers', CustomerController::class);
 });
