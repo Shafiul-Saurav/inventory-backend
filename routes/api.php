@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\SystemSettingController;
 
@@ -28,6 +29,9 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+
+    //Dashboard Info
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
     //System Setting Route
     Route::apiResource('/system-setting', SystemSettingController::class)->only(['index', 'update']);
