@@ -1,20 +1,21 @@
 <?php
 
-namespace App\Repositories\Customer;
+namespace App\Repositories\ExpenseCategory;
 
-use App\Models\User as Customer;
+use Illuminate\Support\Str;
+use App\Models\ExpenseCategory;
 use App\Service\FileUploadService;
-use Illuminate\Support\Facades\Hash;
 
-class CustomerRepository implements CustomerInterface
+class ExpenseCategoryRepository implements ExpenseCategoryInterface
 {
-    private $filePath = 'public/customer';
+    private $filePath = 'public/expensecategory';
+
     /*
     * @return mixed|void
     */
     public function all()
     {
-        $data = Customer::customer()->latest('id')->get();
+        $data = ExpenseCategory::latest('id')->get();
 
         return $data;
     }
@@ -24,11 +25,9 @@ class CustomerRepository implements CustomerInterface
     */
     public function allPaginate($perPage)
     {
-        $data = Customer::customer()->latest('id')
-        ->when(request('search'), function($query) {
-            $query->where('name', 'like', '%'.request('search').'%')
-            ->orWhere('phone', 'like', '%'.request('search').'%')
-            ->orWhere('email', 'like', '%'.request('search').'%');
+        $data = ExpenseCategory::latest('id')
+        ->when(request('search'), function($query){
+            $query->where('name', 'like', '%'.request('search').'%');
         })
         ->paginate($perPage);
 
@@ -40,7 +39,7 @@ class CustomerRepository implements CustomerInterface
     */
     public function show($id)
     {
-        $data = Customer::findOrFail($id);
+        $data = ExpenseCategory::findOrFail($id);
 
         return $data;
     }
@@ -51,12 +50,9 @@ class CustomerRepository implements CustomerInterface
     */
     public function store($requestData)
     {
-        $data = Customer::create([
-            'role_id' => Customer::CUSTOMER,
+        $data = ExpenseCategory::create([
             'name' => $requestData->name,
-            'phone' => $requestData->phone,
-            'email' => $requestData->email,
-            'password' => Hash::make(1234),
+            'slug' => Str::slug($requestData->name),
         ]);
 
         /* Image Upload */
@@ -64,7 +60,7 @@ class CustomerRepository implements CustomerInterface
 
         /* Update File Stage */
         $data->update([
-            'file' => 'http://localhost:8000'.$imagePath,
+            'file' => 'http://localhost:8000'.$imagePath
         ]);
 
         return $this->show($data->id);
@@ -78,10 +74,8 @@ class CustomerRepository implements CustomerInterface
     {
         $data = $this->show($id);
         $data->update([
-            'role_id' => Customer::CUSTOMER,
             'name' => $requestData->name,
-            'phone' => $requestData->phone,
-            'email' => $requestData->email,
+            'slug' => Str::slug($requestData->name),
         ]);
 
         /* Image Upload */
@@ -89,7 +83,7 @@ class CustomerRepository implements CustomerInterface
 
         /* Update File Stage */
         $data->update([
-            'file' => 'http://localhost:8000'.$imagePath,
+            'file' => 'http://localhost:8000'.$imagePath
         ]);
 
         return $data;
@@ -102,6 +96,7 @@ class CustomerRepository implements CustomerInterface
     public function delete($id)
     {
         $data = $this->show($id);
+
         $data->delete();
 
         return $data;
@@ -116,7 +111,7 @@ class CustomerRepository implements CustomerInterface
         $data = $this->show($id);
         if ($data->is_active == 1) {
             $data->is_active = 0;
-        } elseif($data->is_active == 0) {
+        } elseif ($data->is_active == 0) {
             $data->is_active = 1;
         }
 
@@ -124,6 +119,4 @@ class CustomerRepository implements CustomerInterface
 
         return $data;
     }
-
-
 }

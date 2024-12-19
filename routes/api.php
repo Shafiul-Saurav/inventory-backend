@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\DashboardController;
+use App\Http\Controllers\Api\ExpenseCategoryController;
 use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\SystemSettingController;
 
@@ -61,8 +62,13 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/staffStatus/{id}', [StaffController::class, 'status']);
     Route::apiResource('/staffs', StaffController::class);
 
-    // Staff Route
+    // Product Route
     Route::get('/allProducts', [ProductController::class, 'allProducts']);
     Route::get('/productStatus/{id}', [ProductController::class, 'status']);
     Route::apiResource('/products', ProductController::class);
+
+    //Expense Category Route
+    Route::get('/allExpenseCategories', [ExpenseCategoryController::class, 'allExpenseCategories']);
+    Route::get('/expenseCategory/{id}', [ExpenseCategoryController::class, 'status']);
+    Route::apiResource('/expenseCategories', ExpenseCategoryController::class);
 });

@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
             SupplierSeeder::class,
             CustomerSeeder::class,
             StaffSeeder::class,
-            ProductSeeder::class
+            ProductSeeder::class,
+            ExpenseSeeder::class
         ]);
     }
 }
