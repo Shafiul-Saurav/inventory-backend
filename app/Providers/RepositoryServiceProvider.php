@@ -2,16 +2,18 @@
 
 namespace App\Providers;
 
-use App\Repositories\Brand\BrandInterface;
-use App\Repositories\Brand\BrandRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\Category\CategoryInterface;
-use App\Repositories\Category\CategoryRepository;
-use App\Repositories\Customer\CustomerInterface;
-use App\Repositories\Customer\CustomerRepository;
+use App\Repositories\Brand\BrandInterface;
 use App\Repositories\Staff\StaffInterface;
+use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Staff\StaffRepository;
+use App\Repositories\Product\ProductInterface;
+use App\Repositories\Product\ProductRepository;
+use App\Repositories\Category\CategoryInterface;
+use App\Repositories\Customer\CustomerInterface;
 use App\Repositories\Supplier\SupplierInterface;
+use App\Repositories\Category\CategoryRepository;
+use App\Repositories\Customer\CustomerRepository;
 use App\Repositories\Supplier\SupplierRepository;
 use App\Repositories\SystemSetting\SystemSettingInterface;
 use App\Repositories\SystemSetting\SystemSettingRepository;
@@ -51,6 +53,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             StaffInterface::class,
             StaffRepository::class
+        );
+
+        $this->app->bind(
+            ProductInterface::class,
+            ProductRepository::class
         );
     }
 

@@ -67,7 +67,7 @@ class SupplierRepository implements SupplierInterface
         ]);
 
         /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
         /* Update File Stage */
         $data->update([
@@ -95,7 +95,7 @@ class SupplierRepository implements SupplierInterface
         ]);
 
         /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
         /* Update File Stage */
         $data->update([
