@@ -7,7 +7,9 @@ use App\Repositories\Brand\BrandInterface;
 use App\Repositories\Staff\StaffInterface;
 use App\Repositories\Brand\BrandRepository;
 use App\Repositories\Staff\StaffRepository;
+use App\Repositories\Expense\ExpenseInterface;
 use App\Repositories\Product\ProductInterface;
+use App\Repositories\Expense\ExpenseRepository;
 use App\Repositories\Product\ProductRepository;
 use App\Repositories\Category\CategoryInterface;
 use App\Repositories\Customer\CustomerInterface;
@@ -17,6 +19,8 @@ use App\Repositories\Customer\CustomerRepository;
 use App\Repositories\Supplier\SupplierRepository;
 use App\Repositories\SystemSetting\SystemSettingInterface;
 use App\Repositories\SystemSetting\SystemSettingRepository;
+use App\Repositories\ExpenseCategory\ExpenseCategoryInterface;
+use App\Repositories\ExpenseCategory\ExpenseCategoryRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -58,6 +62,15 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ProductInterface::class,
             ProductRepository::class
+        );
+        $this->app->bind(
+            ExpenseCategoryInterface::class,
+            ExpenseCategoryRepository::class
+        );
+
+        $this->app->bind(
+            ExpenseInterface::class,
+            ExpenseRepository::class
         );
     }
 

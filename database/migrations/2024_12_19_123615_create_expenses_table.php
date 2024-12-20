@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('expenses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('expense_category_id')->constrained('expense_categories');
+            $table->foreignId('staff_id')->constrained('users');
+            $table->decimal('amount', 10, 2)->default(0);
+            $table->longText('note')->nullable();
+            $table->string('file');
             $table->timestamps();
             $table->softDeletes();
         });

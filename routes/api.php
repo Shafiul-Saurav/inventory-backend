@@ -5,13 +5,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CustomerController;
-use App\Http\Controllers\Api\DashboardController;
-use App\Http\Controllers\Api\ExpenseCategoryController;
 use App\Http\Controllers\Api\SupplierController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SystemSettingController;
+use App\Http\Controllers\Api\ExpenseCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,6 +70,11 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Expense Category Route
     Route::get('/allExpenseCategories', [ExpenseCategoryController::class, 'allExpenseCategories']);
-    Route::get('/expenseCategory/{id}', [ExpenseCategoryController::class, 'status']);
+    Route::get('/expenseCategoryStatus/{id}', [ExpenseCategoryController::class, 'status']);
     Route::apiResource('/expenseCategories', ExpenseCategoryController::class);
+
+    //Expense Route
+    Route::get('/allExpenses', [ExpenseController::class, 'allExpenses']);
+    Route::get('/expenseStatus/{id}', [ExpenseController::class, 'status']);
+    Route::apiResource('/expenses', ExpenseController::class);
 });
