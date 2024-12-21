@@ -56,7 +56,7 @@ class ExpenseCategoryRepository implements ExpenseCategoryInterface
         ]);
 
         /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
         /* Update File Stage */
         $data->update([
@@ -78,14 +78,16 @@ class ExpenseCategoryRepository implements ExpenseCategoryInterface
             'slug' => Str::slug($requestData->name),
         ]);
 
-        /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
 
-        /* Update File Stage */
-        $data->update([
-            'file' => 'http://localhost:8000'.$imagePath
-        ]);
+        if ($requestData->hasFile('file')) {
+            /* Image Upload */
+            $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
+            /* Update File Stage */
+            $data->update([
+                'file' => 'http://localhost:8000'.$imagePath
+            ]);
+        }
         return $data;
     }
 

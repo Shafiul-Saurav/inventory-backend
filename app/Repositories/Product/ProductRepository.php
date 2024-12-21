@@ -115,22 +115,23 @@ class ProductRepository implements ProductInterface
             'code' => $requestData->code,
         ]);
 
-        /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        if ($requestData->hasFile('file')) {
+            /* Image Upload */
+            $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
 
-        /* BarCode Generate */
-        $barCodePath = (new BarCodeService())->generateBarCode($data, $this->filePath);
+            /* BarCode Generate */
+            $barCodePath = (new BarCodeService())->generateBarCode($data, $this->filePath);
 
-        /* QrCode Generate */
-        $qrCodePath = (new QrCodeService())->generateQrCode($data, $this->filePath);
+            /* QrCode Generate */
+            $qrCodePath = (new QrCodeService())->generateQrCode($data, $this->filePath);
 
-        /* Update File Stage */
-        $data->update([
-            'file' => 'http://localhost:8000'.$imagePath,
-            'barcode' => 'http://localhost:8000'.$barCodePath,
-            'qrcode' => 'http://localhost:8000'.$qrCodePath,
-        ]);
-
+            /* Update File Stage */
+            $data->update([
+                'file' => 'http://localhost:8000'.$imagePath,
+                'barcode' => 'http://localhost:8000'.$barCodePath,
+                'qrcode' => 'http://localhost:8000'.$qrCodePath,
+            ]);
+        }
         return $data;
     }
 

@@ -68,7 +68,7 @@ class ExpenseRepository implements ExpenseInterface
         ]);
 
         /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
         /* Update File Stage */
         $data->update([
@@ -92,14 +92,15 @@ class ExpenseRepository implements ExpenseInterface
             'note' => $requestData->note,
         ]);
 
-        /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        if ($requestData->hasFile('file')) {
+            /* Image Upload */
+            $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
 
-        /* Update File Stage */
-        $data->update([
-            'file' => 'http://localhost:8000'.$imagePath
-        ]);
-
+            /* Update File Stage */
+            $data->update([
+                'file' => 'http://localhost:8000'.$imagePath
+            ]);
+        }
         return $data;
     }
 

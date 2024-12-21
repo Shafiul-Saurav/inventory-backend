@@ -8,38 +8,38 @@ class FileUploadService
 {
     public function imageUpload($request, $model, $path = 'public/uploads')
     {
-        if ($request->file != null) {
-            $uploaded_file = $request->file;
-
-            /* If Old File Exist */
-            if ($model->file != null) {
+        if ($request->hasFile('file')) {
+            $uploaded_file = $request->file('file');
+            // If Old File Exists, delete it
+            if ($model->file) {
                 Storage::delete($model->file);
             }
 
             $file_extension = $uploaded_file->getClientOriginalExtension();
-            $file_upload_url = Storage::putFileAs($path, $uploaded_file, $model->id.'.jpg', 'public');
+            // Dynamically name the file with the model ID and extension
+            $file_name = $model->id . '.jpg';
+            $file_upload_url = Storage::putFileAs($path, $uploaded_file, $file_name, 'public');
 
             return Storage::url($file_upload_url);
         }
-
-        return;
+        return null;
     }
     public function fileUpload($request, $model, $path = 'public/uploads')
     {
-        if ($request->file != null) {
-            $uploaded_file = $request->file;
-
-            /* If Old File Exist */
-            if ($model->file != null) {
+        if ($request->hasFile('file')) {
+            $uploaded_file = $request->file('file');
+            // If Old File Exists, delete it
+            if ($model->file) {
                 Storage::delete($model->file);
             }
 
             $file_extension = $uploaded_file->getClientOriginalExtension();
-            $file_upload_url = Storage::putFileAs($path, $uploaded_file, $model->id.'.'.$file_extension, 'public');
+            // Dynamically name the file with the model ID and extension
+            $file_name = $model->id . '.' . $file_extension;
+            $file_upload_url = Storage::putFileAs($path, $uploaded_file, $file_name, 'public');
 
             return Storage::url($file_upload_url);
         }
-
-        return;
+        return null;
     }
 }

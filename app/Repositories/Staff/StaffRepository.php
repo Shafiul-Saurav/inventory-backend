@@ -63,7 +63,7 @@ class StaffRepository implements StaffInterface
         ]);
 
         /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
+        $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
         /* Update File Stage */
 
         $data->update([
@@ -90,14 +90,15 @@ class StaffRepository implements StaffInterface
             'password' => Hash::make(1234),
         ]);
 
-        /* Image Upload */
-        $imagePath = (new FileUploadService())->imageUpload($requestData, $data, $this->filePath);
-        /* Update File Stage */
+        if ($requestData->hasFile('file')) {
+            /* Image Upload */
+            $imagePath = (new FileUploadService())->fileUpload($requestData, $data, $this->filePath);
+            /* Update File Stage */
 
-        $data->update([
-            'file' => 'http://localhost:8000'.$imagePath
-        ]);
-
+            $data->update([
+                'file' => 'http://localhost:8000'.$imagePath
+            ]);
+        }
         return $data;
     }
 

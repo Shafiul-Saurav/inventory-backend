@@ -57,7 +57,7 @@ class CategoryRepository implements CategoryInterface
         ]);
 
         /* Image Upload */
-        $image_path = (new FileUploadService())->imageUpload($request_data, $data, $this->file_path);
+        $image_path = (new FileUploadService())->fileUpload($request_data, $data, $this->file_path);
 
         /* Update File Stage */
         $data->update([
@@ -89,13 +89,15 @@ class CategoryRepository implements CategoryInterface
             'code' => $request_data->code,
         ]);
 
-        /* Image Upload */
-        $image_path = (new FileUploadService())->imageUpload($request_data, $data, $this->file_path);
+        if ($request_data->hasFile('file')) {
+            /* Image Upload */
+            $image_path = (new FileUploadService())->fileUpload($request_data, $data, $this->file_path);
 
-        /* Update File Stage */
-        $data->update([
-            'file' => 'http://localhost:8000'.$image_path,
-        ]);
+            /* Update File Stage */
+            $data->update([
+                'file' => 'http://localhost:8000'.$image_path,
+            ]);
+        }
 
         return $data;
     }
