@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\StaffController;
+use App\Http\Controllers\Api\SalaryController;
 use App\Http\Controllers\Api\ExpenseController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
@@ -77,4 +78,8 @@ Route::middleware('auth:sanctum')->group(function(){
     Route::get('/allExpenses', [ExpenseController::class, 'allExpenses']);
     Route::get('/expenseStatus/{id}', [ExpenseController::class, 'status']);
     Route::apiResource('/expenses', ExpenseController::class);
+
+    //Salary Route
+    Route::get('/allSalaries', [SalaryController::class, 'allSalaries']);
+    Route::apiResource('/salaries', SalaryController::class);
 });

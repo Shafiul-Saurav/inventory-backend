@@ -21,6 +21,8 @@ use App\Repositories\SystemSetting\SystemSettingInterface;
 use App\Repositories\SystemSetting\SystemSettingRepository;
 use App\Repositories\ExpenseCategory\ExpenseCategoryInterface;
 use App\Repositories\ExpenseCategory\ExpenseCategoryRepository;
+use App\Repositories\Salary\SalaryInterface;
+use App\Repositories\Salary\SalaryRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -71,6 +73,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             ExpenseInterface::class,
             ExpenseRepository::class
+        );
+
+        $this->app->bind(
+            SalaryInterface::class,
+            SalaryRepository::class
         );
     }
 
