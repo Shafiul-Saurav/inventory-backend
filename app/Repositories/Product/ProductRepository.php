@@ -42,6 +42,12 @@ class ProductRepository implements ProductInterface
             $query->where('name', 'like', '%'.request('search').'%')
             ->orWhere('code', 'like', '%'.request('search').'%');
         })
+        ->when(request('category_id'), function($query) {
+            $query->where(['category_id' => request('category_id')]);
+        })
+        ->when(request('brand_id'), function($query) {
+            $query->where(['brand_id' => request('brand_id')]);
+        })
         ->paginate($perPage);
 
         return $data;

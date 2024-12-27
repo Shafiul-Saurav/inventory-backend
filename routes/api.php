@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\StaffController;
 use App\Http\Controllers\Api\SalaryController;
 use App\Http\Controllers\Api\ExpenseController;
@@ -14,6 +15,7 @@ use App\Http\Controllers\Api\SupplierController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\SystemSettingController;
 use App\Http\Controllers\Api\ExpenseCategoryController;
+use App\Http\Controllers\Api\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,4 +84,15 @@ Route::middleware('auth:sanctum')->group(function(){
     //Salary Route
     Route::get('/allSalaries', [SalaryController::class, 'allSalaries']);
     Route::apiResource('/salaries', SalaryController::class);
+
+    //Cart Route
+    Route::get('/allCartItems', [CartController::class, 'allCartItems']);
+    Route::post('/addToCart', [CartController::class, 'addToCart']);
+    Route::get('/removeFromCart/{id}', [CartController::class, 'removeFromCart']);
+    Route::get('/increaseItemQty/{id}', [CartController::class, 'increaseItemQty']);
+    Route::get('/decreaseItemQty/{id}', [CartController::class, 'decreaseItemQty']);
+
+    //Order Route
+    Route::get('/allOrders', [OrderController::class, 'allOrders']);
+    Route::apiResource('/orders', OrderController::class);
 });
