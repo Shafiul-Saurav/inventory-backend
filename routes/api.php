@@ -94,5 +94,5 @@ Route::middleware('auth:sanctum')->group(function(){
 
     //Order Route
     Route::get('/allOrders', [OrderController::class, 'allOrders']);
-    Route::apiResource('/orders', OrderController::class);
+    Route::apiResource('/orders', OrderController::class)->only(['index', 'store', 'show']);
 });

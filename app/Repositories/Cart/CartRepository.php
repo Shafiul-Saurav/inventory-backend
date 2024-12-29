@@ -13,7 +13,7 @@ class CartRepository implements CartInterface
     */
     public function allCartItems()
     {
-        $data = Cart::with(['products:id,name,sell_price,code'])->get();
+        $data = Cart::with(['product:id,name,sell_price,code'])->get();
 
         return $data;
     }
@@ -28,7 +28,7 @@ class CartRepository implements CartInterface
         $product = Product::find($product_id);
 
         //Chech if already product added on card or not
-        $check = Cart::where(['product_id' => $product_id]);
+        $check = Cart::where(['product_id' => $product_id])->first();
         if ($check) {
             // Increase Cart Qty
             $check->increment('qty');

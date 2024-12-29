@@ -17,7 +17,7 @@ class CartController extends Controller
 
     public function __construct(CartInterface $cartRepository)
     {
-        $this->$cartRepository = $cartRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     public function allCartItems()
@@ -36,7 +36,7 @@ class CartController extends Controller
     {
         try {
             $data = $this->cartRepository->addToCart($requestData);
-            $metaData['totalItems'] = count($data);
+            // $metaData['totalItems'] = count($data);
             $metaData['subtotal'] = Cart::sum('subtotal');
             return $this->ResponseSuccess($data, $metaData, 'Cart Item Added Successfully!', 201);
         } catch (\Exception $e) {
