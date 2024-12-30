@@ -34,4 +34,36 @@ class DashboardController extends Controller
 
         return $this->ResponseSuccess($data);
     }
+
+    public function getAllNotifications()
+    {
+        $user = User::find(1); // Auth::user()
+        return $this->ResponseSuccess($user->notifications);
+    }
+
+    public function getUnreadNotifications()
+    {
+        $user = User::find(1); // Auth::user()
+        return $this->ResponseSuccess($user->unreadNotifications);
+    }
+
+    public function markAsReadAll()
+    {
+        $user = User::find(1); // Auth::user()
+        $user->unreadNotifications()->update(['read_at'=> now()]);
+        return $this->ResponseSuccess($user->unreadNotifications);
+    }
+    public function markAsRead($id)
+    {
+        $user = User::find(1);
+        $notification = $user->notifications()->find($id);
+        if ($notification) {
+            // Mark the notification as read
+            $notification->markAsRead();
+
+            return $this->ResponseSuccess('Notification marked as read.');
+        } else {
+            return $this->ResponseError('Notification not found.', 404);
+        }
+    }
 }

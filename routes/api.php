@@ -35,8 +35,14 @@ Route::middleware('auth:sanctum')->group(function(){
         return $request->user();
     });
 
-    //Dashboard Info
+    //Dashboard Route
     Route::get('/dashboard', [DashboardController::class, 'index']);
+
+    //Notification Route
+    Route::get('/getAllNotifications', [DashboardController::class, 'getAllNotifications']);
+    Route::get('/getUnreadNotifications', [DashboardController::class, 'getUnreadNotifications']);
+    Route::get('/markAsReadAll', [DashboardController::class, 'markAsReadAll']);
+    Route::get('/markAsRead/{id}', [DashboardController::class, 'markAsRead']);
 
     //System Setting Route
     Route::apiResource('/system-setting', SystemSettingController::class)->only(['index', 'update']);
