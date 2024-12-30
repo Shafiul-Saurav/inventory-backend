@@ -17,7 +17,8 @@ class OrderRepository implements OrderInterface
     public function all()
     {
         $data = Order::with([
-            'order_details'
+            'order_details',
+            'customer'
         ])
         ->latest('id')->get();
 
@@ -30,7 +31,8 @@ class OrderRepository implements OrderInterface
     public function allPaginate($perPage)
     {
         $data = Order::with([
-            'order_details'
+            'order_details',
+            'customer'
         ])
         ->latest('id')
         ->when(request('search'), function($query) {
@@ -65,8 +67,8 @@ class OrderRepository implements OrderInterface
 
         if (!$customer) {
             $customer = Customer::create([
-                'name' => 'Walk in Customer',
-                'email' => '',
+                'name' => $requestData->customer_name ?? 'Walk in Customer',
+                // 'email' => '',
                 'role_id' => Customer::CUSTOMER,
                 'phone' => $customer_mobile,
                 'password' => Hash::make(1234)
